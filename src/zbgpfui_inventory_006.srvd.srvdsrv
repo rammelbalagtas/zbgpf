@@ -1,0 +1,7 @@
+@ObjectModel.leadingEntity.name: 'ZBGPFC_InventoryTP_006'
+define service ZBGPFUI_Inventory_006 {
+  expose ZBGPFC_InventoryTP_006 as Inventory;
+  expose ZCE_BGPF_MESSAGES      as Messages;
+  expose I_Currency             as Currency;
+  expose I_UnitOfMeasure        as UnitOfMeasure;
+}

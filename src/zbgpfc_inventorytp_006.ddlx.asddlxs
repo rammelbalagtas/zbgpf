@@ -1,0 +1,167 @@
+@Metadata.layer: #CUSTOMER
+@UI: {
+  headerInfo: {
+    typeName: 'Inventory',
+    typeNamePlural: 'Inventories',
+    title: {
+      type: #STANDARD,
+      label: 'Inventory',
+      value: 'InventoryID'
+    },
+    description: {
+            value: 'ProcessStatus',
+            type: #STANDARD
+    }
+  },
+  presentationVariant: [ {
+    sortOrder: [ {
+      by: 'InventoryID',
+      direction: #DESC
+    } ],
+    visualizations: [ {
+      type: #AS_LINEITEM
+    } ]
+  } ]
+}
+
+//@UI.deleteHidden: true
+@UI.updateHidden: #(HideEdit)
+
+annotate view ZBGPFC_InventoryTP_006 with
+{
+  @UI.facet: [
+  {
+  purpose: #STANDARD,
+    id: 'idIdentification',
+
+    type: #IDENTIFICATION_REFERENCE,
+    label: 'General Information',
+    position: 10
+  },
+  {
+        purpose: #STANDARD,
+        type: #LINEITEM_REFERENCE,
+
+        id: 'Materials',
+        position: 20,
+         label: 'Messages',
+        targetElement: '_Messages'
+       }]
+  @UI.hidden: true
+  UUID;
+
+  @UI.lineItem: [ {
+    position: 20 ,
+    importance: #HIGH,
+    label: 'Inventory ID'}]
+  @UI.identification: [ {
+    position: 20 ,
+    label: 'Inventory ID'
+  },
+  {  type: #FOR_ACTION, dataAction: 'displayMessages', label: 'Display messages',  hidden: #(HideButton1) },
+  {  type: #FOR_ACTION, dataAction: 'refreshDisplay', label: 'Refresh Display' }]
+  @UI.selectionField: [ {
+    position: 20
+  } ]
+  InventoryID;
+
+  @UI.lineItem: [ {
+    position: 30 ,
+    importance: #HIGH,
+    label: 'Product ID'
+  } ]
+  @UI.identification: [ {
+    position: 30 ,
+    label: 'Product ID'
+  } ]
+  ProductID;
+
+  @UI.lineItem: [ {
+    position: 40 ,
+    importance: #HIGH,
+    label: 'Quantity'
+  } ]
+  @UI.identification: [ {
+    position: 40 ,
+    label: 'Quantity'
+  } ]
+  Quantity;
+
+  //  @UI.selectionField: [ {
+  //    position: 50
+  //  } ]
+  //  @UI.lineItem: [ {
+  //  position: 45 ,
+  //  importance: #HIGH,
+  //  label: 'Quantity'
+  //  } ]
+  //  @UI.identification: [ {
+  //    position: 45 ,
+  //    label: 'Quantity'
+  //  } ]
+  @UI.hidden: true
+  QuantityUnit;
+
+  @UI.lineItem: [ {
+    position: 60 ,
+    importance: #HIGH,
+    label: 'Price'
+  } ]
+  @UI.identification: [ {
+    position: 60 ,
+    label: 'Price'
+  } ]
+  Price;
+
+  @UI.selectionField: [ {
+    position: 70
+  } ]
+  CurrencyCode;
+
+  @UI.lineItem: [ {
+    position: 180 ,
+    importance: #HIGH,
+    label: 'Remark'
+  } ]
+  @UI.identification: [ {
+    position: 180 ,
+    label: 'Remark'
+  } ]
+  Remark;
+
+  @UI.hidden: true
+  NotAvailable;
+
+  @UI.hidden: true
+  BgpfStatus;
+
+  @UI.identification: [ {
+    position: 110 ,
+    label: 'Processing Status'
+//    criticality: '1', 
+//    criticalityRepresentation: #WITHOUT_ICON
+  } ]
+  ProcessStatus;
+
+
+  @UI.hidden: true
+  BgpgProcessName;
+
+  @UI.hidden: true
+  ApplLogHandle;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+
+  @UI.hidden: true
+  LastChangedBy;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+}

@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZRBR_DUMMYRAPBO'
+@MappingRole: true
+define role ZRBR_DUMMYRAPBO {
+  grant select on ZRBR_DUMMYRAPBO
+  where TRUE;
+}

@@ -1,0 +1,167 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'UUID'
+@UI.headerInfo.description.type: #STANDARD
+@UI.headerInfo.description.value: 'UUID'
+annotate view ZRBC_DUMMYRAPBO with
+{
+  @EndUserText.label: 'UUID'
+  @UI.facet: [ {
+    label: 'General Information', 
+    id: 'GeneralInfo', 
+    purpose: #STANDARD, 
+    position: 10 , 
+    type: #IDENTIFICATION_REFERENCE
+  } ]
+  @UI.identification: [ {
+    position: 10 , 
+    label: 'UUID'
+  } ]
+  @UI.lineItem: [ {
+    position: 10 , 
+    label: 'UUID'
+  } ]
+  @UI.selectionField: [ {
+    position: 10 
+  } ]
+  UUID;
+  
+  @EndUserText.label: 'InventoryID'
+  @UI.identification: [ {
+    position: 20 , 
+    label: 'InventoryID'
+  } ]
+  @UI.lineItem: [ {
+    position: 20 , 
+    label: 'InventoryID'
+  } ]
+  @UI.selectionField: [ {
+    position: 20 
+  } ]
+  InventoryID;
+  
+  @EndUserText.label: 'ProductID'
+  @UI.identification: [ {
+    position: 30 , 
+    label: 'ProductID'
+  } ]
+  @UI.lineItem: [ {
+    position: 30 , 
+    label: 'ProductID'
+  } ]
+  @UI.selectionField: [ {
+    position: 30 
+  } ]
+  ProductID;
+  
+  @EndUserText.label: 'Field1'
+  @UI.identification: [ {
+    position: 40 , 
+    label: 'Field1'
+  } ]
+  @UI.lineItem: [ {
+    position: 40 , 
+    label: 'Field1'
+  } ]
+  @UI.selectionField: [ {
+    position: 40 
+  } ]
+  Field1;
+  
+  @EndUserText.label: 'Field2'
+  @UI.identification: [ {
+    position: 50 , 
+    label: 'Field2'
+  } ]
+  @UI.lineItem: [ {
+    position: 50 , 
+    label: 'Field2'
+  } ]
+  @UI.selectionField: [ {
+    position: 50 
+  } ]
+  Field2;
+  
+  @EndUserText.label: 'Field3'
+  @UI.identification: [ {
+    position: 60 , 
+    label: 'Field3'
+  } ]
+  @UI.lineItem: [ {
+    position: 60 , 
+    label: 'Field3'
+  } ]
+  @UI.selectionField: [ {
+    position: 60 
+  } ]
+  Field3;
+  
+  @UI.identification: [ {
+    position: 70 
+  } ]
+  @UI.lineItem: [ {
+    position: 70 
+  } ]
+  @UI.selectionField: [ {
+    position: 70 
+  } ]
+  Localcreatedby;
+  
+  @UI.identification: [ {
+    position: 80 
+  } ]
+  @UI.lineItem: [ {
+    position: 80 
+  } ]
+  @UI.selectionField: [ {
+    position: 80 
+  } ]
+  Localcreatedat;
+  
+  @UI.identification: [ {
+    position: 90 
+  } ]
+  @UI.lineItem: [ {
+    position: 90 
+  } ]
+  @UI.selectionField: [ {
+    position: 90 
+  } ]
+  Locallastchangedby;
+  
+  @UI.identification: [ {
+    position: 100 
+  } ]
+  @UI.lineItem: [ {
+    position: 100 
+  } ]
+  @UI.selectionField: [ {
+    position: 100 
+  } ]
+  Locallastchangedat;
+  
+  @UI.identification: [ {
+    position: 110 
+  } ]
+  @UI.lineItem: [ {
+    position: 110 
+  } ]
+  @UI.selectionField: [ {
+    position: 110 
+  } ]
+  Lastchangedat;
+  
+  @EndUserText.label: '_BaseEntity'
+  @UI.identification: [ {
+    position: 120 , 
+    label: '_BaseEntity'
+  } ]
+  @UI.lineItem: [ {
+    position: 120 , 
+    label: '_BaseEntity'
+  } ]
+  @UI.selectionField: [ {
+    position: 120 
+  } ]
+  _BaseEntity;
+}

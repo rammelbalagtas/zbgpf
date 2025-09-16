@@ -1,0 +1,34 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "{{appDescription}}",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "Event driven side effects"
+  },
+  "ui5AppDetails": {
+    "appId": "demo.sap.zbgpf"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_079EC2306AF41C004472F3086CC33F63DB2F02AB_TM",
+    "semanticObject": "zbgpf",
+    "action": "display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_079EC2306AF41C004472F3086CC33F63DB2F02AB_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Event driven side effects"
+      }
+    }
+  ]
+}

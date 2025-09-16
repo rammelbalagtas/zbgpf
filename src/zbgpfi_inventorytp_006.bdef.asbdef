@@ -1,0 +1,27 @@
+interface;
+use draft;
+use side effects;
+define behavior for ZBGPFI_InventoryTP_006 alias Inventory
+use etag
+
+{
+
+  use action reCalculateInventory;
+  use action validQuantity;
+  use action displayMessages;
+  use action refreshDisplay;
+
+  use event QuantityUpdated;
+  use event ProcessCompleted;
+  use event CreatedEvent;
+
+  use create;
+  use update;
+  use delete;
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}

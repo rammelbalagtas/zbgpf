@@ -1,0 +1,11 @@
+@EndUserText: {
+  label: 'Service Definition for ZRBC_DUMMYRAPBO'
+}
+@ObjectModel: {
+  leadingEntity: {
+    name: 'ZRBC_DUMMYRAPBO'
+  }
+}
+define service ZRBUI_DUMMYRAPBO_O4 provider contracts odata_v4_ui {
+  expose ZRBC_DUMMYRAPBO as DummyEntity;
+}

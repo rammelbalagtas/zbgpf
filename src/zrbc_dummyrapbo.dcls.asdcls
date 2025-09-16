@@ -1,0 +1,6 @@
+@EndUserText.label: 'ZRBC_DUMMYRAPBO'
+@MappingRole: true
+define role ZRBC_DUMMYRAPBO {
+  grant select on ZRBC_DUMMYRAPBO
+  where INHERITING CONDITIONS FROM ENTITY ZRBR_DUMMYRAPBO REPLACING { ROOT WITH _BaseEntity };
+}
