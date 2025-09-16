@@ -47,7 +47,6 @@ CLASS zbgpfcl_calc_inventory_006 DEFINITION
 ENDCLASS.
 
 
-
 CLASS zbgpfcl_calc_inventory_006 IMPLEMENTATION.
 
   METHOD constructor.
@@ -195,45 +194,119 @@ CLASS zbgpfcl_calc_inventory_006 IMPLEMENTATION.
 *      COMMIT ENTITIES.
 * ENDIF.
 
-    DATA update TYPE TABLE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
-    DATA update_line TYPE STRUCTURE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
+****Update other RAP BO
+*    DATA update TYPE TABLE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
+*    DATA update_line TYPE STRUCTURE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
+*
+*    READ ENTITIES OF zrbr_dummyrapbo
+*                ENTITY DummyEntity
+*                ALL FIELDS
+*                WITH VALUE #( ( %is_draft = if_abap_behv=>mk-off
+*                                %key-uuid = 'E2AD113320E21FE0A4CBDC4CC92A2D3C'
+*                            ) )
+*                RESULT DATA(entities)
+*                FAILED DATA(failed).
+*
+*    IF entities IS NOT INITIAL.
+*      LOOP AT entities INTO DATA(entity).
+*        update_line-%is_draft = if_abap_behv=>mk-off.
+*        update_line-uuid = entity-uuid.
+*        update_line-field1 = 'Test with validation2'.
+*        APPEND update_line TO update.
+*      ENDLOOP.
+*
+*      MODIFY ENTITIES OF zrbr_dummyrapbo
+*                  ENTITY DummyEntity
+*                    UPDATE FIELDS ( Field1 Field2 Field3 )
+*                    WITH update
+*                    MAPPED DATA(mapped_ready)
+*                    REPORTED DATA(reported_ready)
+*                    FAILED DATA(failed_ready).
+*
+*      SELECT * FROM zbgpfmess INTO TABLE @DATA(lt_current_messages).
+*      DELETE zbgpfmess FROM TABLE @lt_current_messages.
+*
+*      "this line is required to change the phase from modify to save phase
+*      "we can put our updates to database after this
+*      COMMIT ENTITIES RESPONSE OF zrbr_dummyrapbo
+*                     " TODO: variable is assigned but never used (ABAP cleaner)
+*                   FAILED   DATA(ls_save_failed)
+*                   " TODO: variable is assigned but never used (ABAP cleaner)
+*                   REPORTED DATA(ls_save_reported).
+*    ENDIF.
 
-    READ ENTITIES OF zrbr_dummyrapbo
-                ENTITY DummyEntity
-                ALL FIELDS
-                WITH VALUE #( ( %is_draft = if_abap_behv=>mk-off
-                                %key-uuid = 'E2AD113320E21FE0A4CBDC4CC92A2D3C'
-                            ) )
-                RESULT DATA(entities)
-                FAILED DATA(failed).
+*    zcl_odata_v4_model=>call_odata(  ).
 
-    IF entities IS NOT INITIAL.
-      LOOP AT entities INTO DATA(entity).
-        update_line-%is_draft = if_abap_behv=>mk-off.
-        update_line-uuid = entity-uuid.
-        update_line-field1 = 'Change 111'.
-        APPEND update_line TO update.
-      ENDLOOP.
 
-      MODIFY ENTITIES OF zrbr_dummyrapbo
-                  ENTITY DummyEntity
-                    UPDATE FIELDS ( Field1 Field2 Field3 )
-                    WITH update
-                    MAPPED DATA(mapped_ready)
-                    REPORTED DATA(reported_ready)
-                    FAILED DATA(failed_ready).
+*    DATA create TYPE TABLE FOR CREATE /DMO/I_Travel_U.
+*    SELECT SINGLE AirlineID, ConnectionID, FlightDate FROM /DMO/I_Flight INTO @DATA(flight).
+*    create = VALUE #( ( %cid                 = 'create_travel'
+*                         CustomerID           = '1'
+*                         AgencyID             = '70006'
+*                         BeginDate            = flight-FlightDate
+*                         EndDate              = flight-FlightDate
+*   ) ).
+*
+*    MODIFY ENTITIES OF /DMO/I_Travel_U
+*         ENTITY Travel
+*           CREATE FIELDS ( CustomerID AgencyID BeginDate EndDate ) WITH create
+*           CREATE BY \_Booking
+*           FIELDS ( CustomerID AirlineID ConnectionID FlightDate ) WITH
+*           VALUE #( ( %cid_ref = 'create_travel'
+*                      %target = VALUE #( ( %cid         = 'create_booking_1'
+*                                           CustomerID   = '1'
+*                                           AirlineID    = flight-AirlineID
+*                                           ConnectionID = flight-ConnectionID
+*                                           FlightDate   = flight-FlightDate )
+*                                         ( %cid         = 'create_booking_2'
+*                                           CustomerID   = '1'
+*                                           AirlineID    = flight-AirlineID
+*                                           ConnectionID = flight-ConnectionID
+*                                         FlightDate   = flight-FlightDate )
+*                                          ) ) )
+*
+*     MAPPED DATA(mapped)
+*     REPORTED DATA(reported)
+*     FAILED DATA(failed).
+*
+*     COMMIT ENTITIES.
 
-      SELECT * FROM zbgpfmess INTO TABLE @DATA(lt_current_messages).
+    DATA create TYPE TABLE FOR CREATE /DMO/I_Travel_U.
+    SELECT SINGLE AirlineID, ConnectionID, FlightDate FROM /DMO/I_Flight INTO @DATA(flight).
+    create = VALUE #( ( %cid                 = 'create_travel'
+                         CustomerID           = '1'
+                         AgencyID             = '70006'
+                         BeginDate            = flight-FlightDate
+                         EndDate              = flight-FlightDate
+   ) ).
 
-      "this line is required to change the phase from modify to save phase
-      "we can put our updates to database after this
-      COMMIT ENTITIES RESPONSE OF zrbr_dummyrapbo
-                     " TODO: variable is assigned but never used (ABAP cleaner)
-                   FAILED   DATA(ls_save_failed)
-                   " TODO: variable is assigned but never used (ABAP cleaner)
-                   REPORTED DATA(ls_save_reported).
+    MODIFY ENTITIES OF /DMO/I_Travel_U
+         ENTITY Travel
+           CREATE FIELDS ( CustomerID AgencyID BeginDate EndDate ) WITH create
+     MAPPED DATA(mapped)
+     REPORTED DATA(reported)
+     FAILED DATA(failed).
 
-    ENDIF.
+    COMMIT ENTITIES BEGIN.
+    LOOP AT mapped-travel INTO DATA(ls_mapped).
+      CONVERT KEY OF /DMO/I_Travel_U FROM ls_mapped-%pid TO FINAL(ls_key).
+*
+*       CONVERT KEY OF demo_umanaged_root_late_num
+*        FROM <mapped_early>-%pid
+*        TO FINAL(lv_root_key).
+    ENDLOOP.
+    COMMIT ENTITIES END.
+
+*      COMMIT ENTITIES RESPONSE OF /DMO/I_Travel_U
+**                   MAPPED DATA(ls_save_mapped)
+*                     " TODO: variable is assigned but never used (ABAP cleaner)
+*                   FAILED   DATA(ls_save_failed)
+*                   " TODO: variable is assigned but never used (ABAP cleaner)
+*                   REPORTED DATA(ls_save_reported).
+*    LOOP AT mapped-travel INTO DATA(ls_mapped).
+*        CONVERT KEY OF /DMO/I_Travel_U FROM ls_mapped-TravelID TO DATA(ls_key).
+*    ENDLOOP.
+
   ENDMETHOD.
 
   METHOD run_via_bgpf.

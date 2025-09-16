@@ -3,23 +3,23 @@ strict ( 2 );
 with draft;
 extensible;
 define behavior for ZRBR_DUMMYRAPBO alias DummyEntity
-persistent table ZDUMMYRAPBO
+persistent table zdummyrapbo
 extensible
-draft table ZRBDUMMYRAPBO_D
+draft table zrbdummyrapbo_d
 etag master Locallastchangedat
 lock master total etag Lastchangedat
-authorization master( global )
+authorization master ( global )
 {
   field ( readonly )
-   UUID,
-   Localcreatedby,
-   Localcreatedat,
-   Locallastchangedby,
-   Locallastchangedat,
-   Lastchangedat;
+  UUID,
+  Localcreatedby,
+  Localcreatedat,
+  Locallastchangedby,
+  Locallastchangedat,
+  Lastchangedat;
 
   field ( numbering : managed )
-   UUID;
+  UUID;
 
 
   create;
@@ -30,21 +30,28 @@ authorization master( global )
   draft action Discard;
   draft action Edit;
   draft action Resume;
-  draft determine action Prepare;
+    draft determine action Prepare;
 
-  mapping for ZDUMMYRAPBO corresponding extensible
-  {
-    UUID = uuid;
-    InventoryID = inventory_id;
-    ProductID = product_id;
-    Field1 = field1;
-    Field2 = field2;
-    Field3 = field3;
-    Localcreatedby = localcreatedby;
-    Localcreatedat = localcreatedat;
-    Locallastchangedby = locallastchangedby;
-    Locallastchangedat = locallastchangedat;
-    Lastchangedat = lastchangedat;
-  }
+//  draft determine action Prepare
+//  {
+//    validation validatefield1;
+//  }
+
+  validation validatefield1 on save { create; update; field Field1; }
+
+  mapping for zdummyrapbo corresponding extensible
+    {
+      UUID               = uuid;
+      InventoryID        = inventory_id;
+      ProductID          = product_id;
+      Field1             = field1;
+      Field2             = field2;
+      Field3             = field3;
+      Localcreatedby     = localcreatedby;
+      Localcreatedat     = localcreatedat;
+      Locallastchangedby = locallastchangedby;
+      Locallastchangedat = locallastchangedat;
+      Lastchangedat      = lastchangedat;
+    }
 
 }

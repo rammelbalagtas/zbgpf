@@ -20,6 +20,7 @@ CLASS lsc_zbgpfr_inventorytp_006 IMPLEMENTATION.
     DATA update_inventories_2 TYPE TABLE FOR CHANGE ZBGPFR_InventoryTP_006\\Inventory.
 
     IF create-inventory IS NOT INITIAL.
+
       lt_create_inventories[] = create-inventory[].
       LOOP AT lt_create_inventories ASSIGNING FIELD-SYMBOL(<create_inventory>).
         "check if a process via bgpf shall be started
@@ -411,6 +412,37 @@ CLASS lhc_inventory IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD refreshDisplay.
+
+*    DATA update TYPE TABLE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
+*    DATA update_line TYPE STRUCTURE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
+*
+*    READ ENTITIES OF zrbr_dummyrapbo
+*                ENTITY DummyEntity
+*                ALL FIELDS
+*                WITH VALUE #( ( %is_draft = if_abap_behv=>mk-off
+*                                %key-uuid = 'E2AD113320E21FE0A4CBDC4CC92A2D3C'
+*                            ) )
+*                RESULT DATA(entities)
+*                FAILED DATA(lt_failed).
+*
+*    IF entities IS NOT INITIAL.
+*      LOOP AT entities INTO DATA(entity).
+*        update_line-%is_draft = if_abap_behv=>mk-off.
+*        update_line-uuid = entity-uuid.
+*        update_line-field1 = '1212323214'.
+*        update_line-field2 = 'Change 2'.
+*        update_line-field3 = 'Change 3'.
+*        APPEND update_line TO update.
+*      ENDLOOP.
+*
+*      MODIFY ENTITIES OF zrbr_dummyrapbo
+*                  ENTITY DummyEntity
+*                    UPDATE FIELDS ( Field1 Field2 Field3 )
+*                    WITH update
+*                    REPORTED DATA(reported_ready)
+*                    FAILED DATA(failed_ready).
+*    ENDIF.
+
 *    READ ENTITIES OF ZBGPFR_InventoryTP_006 IN LOCAL MODE
 *         ENTITY Inventory ALL FIELDS
 *         WITH CORRESPONDING #( keys )
@@ -419,6 +451,23 @@ CLASS lhc_inventory IMPLEMENTATION.
 *    result = VALUE #( FOR inventory IN lt_inventories
 *                          ( %tky   = inventory-%tky
 *                            %param = inventory ) ).
+
+    DATA create TYPE TABLE FOR CREATE /DMO/I_Travel_U.
+    SELECT SINGLE AirlineID, ConnectionID, FlightDate FROM /DMO/I_Flight INTO @DATA(flight).
+    create = VALUE #( ( %cid                 = 'create_travel'
+                         CustomerID           = '1'
+                         AgencyID             = '70006'
+                         BeginDate            = flight-FlightDate
+                         EndDate              = flight-FlightDate
+   ) ).
+
+    MODIFY ENTITIES OF /DMO/I_Travel_U
+         ENTITY Travel
+           CREATE FIELDS ( CustomerID AgencyID BeginDate EndDate ) WITH create
+     MAPPED DATA(lt_mapped)
+     REPORTED DATA(lt_reported)
+     FAILED DATA(lt_failed).
+
   ENDMETHOD.
 
 ENDCLASS.

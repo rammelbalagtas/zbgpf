@@ -96,6 +96,7 @@ TYPES:
 
     DATA:
       lt_business_data TYPE TABLE OF tys_category,
+      lt_data TYPE post_tt,
       lo_http_client   TYPE REF TO if_web_http_client,
       lo_client_proxy  TYPE REF TO /iwbep/if_cp_client_proxy,
       lo_request       TYPE REF TO /iwbep/if_cp_request_read_list,
@@ -118,11 +119,11 @@ TYPES:
         " Convert JSON to post table
         xco_cp_json=>data->from_string( response )->apply(
           VALUE #( ( xco_cp_json=>transformation->camel_case_to_underscore ) )
-          )->write_to( REF #( lt_business_data ) ).
+          )->write_to( REF #( lt_data ) ).
 
-        xco_cp_json=>data->from_string( response )->apply(
-          VALUE #( ( xco_cp_json=>transformation->camel_case_to_underscore ) )
-          )->write_to( REF #( lt_business_data ) ).
+*        xco_cp_json=>data->from_string( response )->apply(
+*          VALUE #( ( xco_cp_json=>transformation->camel_case_to_underscore ) )
+*          )->write_to( REF #( lt_business_data ) ).
 
         " Handle exceptions during send/receive operations
     ENDTRY.

@@ -10,9 +10,9 @@ ENDCLASS.
 CLASS lcl_local_events IMPLEMENTATION.
   METHOD handleCreate.
 
-    cl_abap_tx=>save( ).
-    zcl_odata_v4_model=>call_odata(  ).
-
+*    cl_abap_tx=>save( ).
+*    zcl_odata_v4_model=>call_odata(  ).
+*
 *    DATA update TYPE TABLE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
 *    DATA update_line TYPE STRUCTURE FOR UPDATE zrbr_dummyrapbo\\DummyEntity.
 *
@@ -29,7 +29,7 @@ CLASS lcl_local_events IMPLEMENTATION.
 *      LOOP AT entities INTO DATA(entity).
 *        update_line-%is_draft = if_abap_behv=>mk-off.
 *        update_line-uuid = entity-uuid.
-*        update_line-field1 = 'Change 1'.
+*        update_line-field1 = 'Change fafafasefesf'.
 *        update_line-field2 = 'Change 2'.
 *        update_line-field3 = 'Change 3'.
 *        APPEND update_line TO update.
@@ -41,7 +41,6 @@ CLASS lcl_local_events IMPLEMENTATION.
 *                    WITH update
 *                    REPORTED DATA(reported_ready)
 *                    FAILED DATA(failed_ready).
-*
 *    ENDIF.
 *
 *    SELECT * FROM zbgpfmess INTO TABLE @DATA(lt_current_messages).
